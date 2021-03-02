@@ -4,6 +4,7 @@ import 'pages/Loading.dart';
 import 'pages/List.dart';
 
 void main() => runApp(MaterialApp(
+  debugShowCheckedModeBanner: false,
   routes: {
     '/': (context) => Home(),
     '/list' : (context) => List(),

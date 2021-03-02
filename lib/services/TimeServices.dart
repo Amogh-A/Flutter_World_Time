@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:World_Time/Constants.dart';
+import 'package:intl/intl.dart';
 
 class TimeServices{
 
@@ -11,11 +12,11 @@ class TimeServices{
     return jsonDecode(response.body);
   }
 
-  void getTime(String path) async{
+  Future <String> getTime(String path) async{
     Response response = await get(Constants().TIME_BASE_URL + path);
     Map data = jsonDecode(response.body);
     DateTime now = DateTime.parse(data['utc_datetime']).add(Duration(hours: int.parse(data['utc_offset'].substring(1,3)),minutes: int.parse(data['utc_offset'].substring(4))));
-    print(now);
+    return DateFormat.jm().format(now);
   }
 
 }

@@ -6,9 +6,17 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
+const dataa = {
+  'location': "Location",
+  'time': "Time"
+};
+
 class _HomeState extends State<Home> {
+  Map data = {};
+
   @override
   Widget build(BuildContext context) {
+    data = data.isEmpty? dataa: data;
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -18,14 +26,19 @@ class _HomeState extends State<Home> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                FlatButton.icon(onPressed: (){
-                  Navigator.pushNamed(context, '/loading');
+                FlatButton.icon(onPressed: () async{
+                   dynamic result = await Navigator.pushNamed(context, '/loading');
+                   if(result!=null){
+                     setState(() {
+                       data = result;
+                     });
+                   }
                   //TimeServices().getTime("Africa/Abidjan");
                 }, icon: Icon(Icons.location_on_outlined), label: Text("Edit Location")),
                 SizedBox(height: 30,),
                 Center(
                   child: Text(
-                      "Berlin",
+                      data['location'],
                     style: TextStyle(
                       fontSize: 40,
                       color: Colors.white
@@ -34,7 +47,7 @@ class _HomeState extends State<Home> {
                 ),
                 Center(
                   child: Text(
-                      "1:30 PM",
+                      data['time'],
                     style: TextStyle(
                       fontSize: 70,
                       color: Colors.white,

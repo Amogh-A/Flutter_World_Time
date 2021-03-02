@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:World_Time/services/TimeServices.dart';
@@ -11,15 +13,23 @@ class _LoadingState extends State<Loading> {
 
   void getData() async{
     List list = await TimeServices().getTimezoneList();
-    Navigator.pushReplacementNamed(context, '/list', arguments: {
+    dynamic result = await Navigator.pushNamed(context, '/list', arguments: {
       'list': list
     });
+    String time = await TimeServices().getTime(result['location']);
+    String location = result['location'].substring(result['location'].lastIndexOf('/')+1);
+    Navigator.pop(context,{
+      'location': location,
+      'time' : time,
+    }
+    );
   }
 
   @override
   void initState(){
     super.initState();
     getData();
+
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:World_Time/services/TimeServices.dart';
 import 'package:flutter/material.dart';
 
 class List extends StatefulWidget {
@@ -9,13 +10,15 @@ class _ListState extends State<List> {
 
   Map data = {};
 
+  void updateTime(data, index) async {
+    Navigator.pop(context,{
+      'location' : data['list'][index],
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     data = ModalRoute.of(context).settings.arguments;
-    print("type1");
-    print(data['list'].runtimeType);
-    print( data['list'].length);
-    print("type2");
     return Scaffold(
       appBar: AppBar(
         title: Text("Choose a location"),
@@ -26,9 +29,9 @@ class _ListState extends State<List> {
         itemBuilder: (context, index){
           return Card(
             child: ListTile(
-              onTap: (
-
-                  ){},
+              onTap: (){
+                updateTime(data,index);
+              },
               title: Text(
                   data['list'][index].substring(data['list'][index].lastIndexOf('/')+1),
                 style: TextStyle(
